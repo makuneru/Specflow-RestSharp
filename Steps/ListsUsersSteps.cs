@@ -1,6 +1,8 @@
 using TechTalk.SpecFlow;
 using NUnit.Framework;
 using RestSharpAPI;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Specflow_RestSharp
 {
@@ -31,6 +33,23 @@ namespace Specflow_RestSharp
             Assert.AreEqual(resListUsers.Total_Pages, 2); // total pages
             Assert.AreEqual(resListUsers.Total, 12); //total number of users
             Assert.AreEqual(resListUsers.Data.Count, 6); //6 users per page
+        }
+
+        [Then(@"Validate that ""([^""]*)"" ""([^""]*)"" is a valid user")]
+        public void ThenValidateThatIsAValidUser(string firstname, string lastname)
+        {
+            List<Data> userDatas = resListUsers.Data;
+            userDatas = resListUsers.Data;
+
+            //Find user in user list
+            var query = from user in userDatas
+                        select new { First_Name = firstname, Last_Name = lastname };
+
+            foreach (var user in query)
+            {
+                Assert.AreEqual(user.First_Name, firstname);
+                Assert.AreEqual(user.Last_Name, lastname);
+            }
         }
     }
 }

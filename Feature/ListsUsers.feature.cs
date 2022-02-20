@@ -111,6 +111,9 @@ this.ScenarioInitialize(scenarioInfo);
 #line 8
  testRunner.Then("Validate the list users page details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
+#line 9
+ testRunner.Then("Validate that \"Lindsay\" \"Ferguson\" is a valid user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
             }
             this.ScenarioCleanup();
         }
