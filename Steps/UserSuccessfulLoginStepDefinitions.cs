@@ -10,12 +10,13 @@ namespace Specflow_RestSharp
         RegistrationAndLogin login = new RegistrationAndLogin();
         RegistrationAndLogin loggedInUser;
         APIRequests user = new APIRequests();
+        
 
         [Given(@"I would like to login email ""([^""]*)"" and password ""([^""]*)""")]
         public void GivenIWouldLikeToLoginEmailAndPassword(string email, string password)
         {
-            login.email = "eve.holt@reqres.in";
-            login.password = "cityslicka";
+            login.email = email;
+            login.password = password;
         }
 
         [When(@"I POST request to login using email and password")]
