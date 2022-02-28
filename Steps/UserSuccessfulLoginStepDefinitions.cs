@@ -1,6 +1,8 @@
 using TechTalk.SpecFlow;
 using NUnit.Framework;
 using RestSharpAPI;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Specflow_RestSharp
 {
@@ -10,13 +12,18 @@ namespace Specflow_RestSharp
         RegistrationAndLogin login = new RegistrationAndLogin();
         RegistrationAndLogin loggedInUser;
         APIRequests user = new APIRequests();
-        
+        private IConfiguration _config;
 
-        [Given(@"I would like to login email ""([^""]*)"" and password ""([^""]*)""")]
-        public void GivenIWouldLikeToLoginEmailAndPassword(string email, string password)
+        public UserSuccessfulLoginStepDefinitions(IConfiguration config)
         {
-            login.email = email;
-            login.password = password;
+            _config = config;
+        }
+
+        [Given(@"I would like to login using email and password")]
+        public void GivenIWouldLikeToLoginUsingEmailAndPassword()
+        {
+            login.email = _config["secret_email"];
+            login.email = _config["secret_password"];
         }
 
         [When(@"I POST request to login using email and password")]

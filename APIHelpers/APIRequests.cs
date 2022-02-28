@@ -1,15 +1,43 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using RestSharp;
+using System;
+using System.IO;
+using TechTalk.SpecFlow;
 
 namespace RestSharpAPI
 {
-    public class APIRequests
-    {
-        public string baseUrl = "https://reqres.in";
+    [Binding]
+    public class APIRequests {
+        private string baseUrl, devBaseURL, prodBaseURL, stgBaseURL;
+
+        public string getBaseURL()
+        {
+            //Default base url
+            devBaseURL = "https://reqres.in";
+
+            //Modify the base url based on environment used
+            stgBaseURL = "https://reqres.in";
+            prodBaseURL = "https://reqres.in";
+
+            //Default Development Environment
+            string environment = Environment.GetEnvironmentVariable("Environment") ?? "Development";
+            switch (environment)
+            {
+                case "Development":
+                    return baseUrl = devBaseURL;
+                case "Staging":
+                    return baseUrl = stgBaseURL;
+                case "Production":
+                    return baseUrl = prodBaseURL;
+                default:
+                    throw new ArgumentException("Environment not yet implemented");
+            }
+        }
 
         public Pages GetListUsers(int page)
         {
-            var client = new RestClient(baseUrl);
+            var client = new RestClient(getBaseURL());
             var request = new RestRequest("/api/users?page=" + page, Method.GET);
             request.RequestFormat = DataFormat.Json;
 
@@ -23,7 +51,7 @@ namespace RestSharpAPI
 
         public Datas GetUser(int id)
         {
-            var client = new RestClient(baseUrl);
+            var client = new RestClient(getBaseURL());
             var request = new RestRequest("/api/users/" + id, Method.GET);
             request.RequestFormat = DataFormat.Json;
 
@@ -37,7 +65,7 @@ namespace RestSharpAPI
 
         public int UserNotFound(int id)
         {
-            var client = new RestClient(baseUrl);
+            var client = new RestClient(getBaseURL());
             var request = new RestRequest("/api/users/" + id, Method.GET);
             request.RequestFormat = DataFormat.Json;
 
@@ -49,7 +77,7 @@ namespace RestSharpAPI
 
         public User CreateUser(User userDetails)
         {
-            var client = new RestClient(baseUrl);
+            var client = new RestClient(getBaseURL());
             var request = new RestRequest("/api/users/", Method.POST);
             request.RequestFormat = DataFormat.Json;
             request.AddBody(userDetails);
@@ -64,7 +92,7 @@ namespace RestSharpAPI
 
         public User UpdateUserPutRequest(User userDetails, int id)
         {
-            var client = new RestClient(baseUrl);
+            var client = new RestClient(getBaseURL());
             var request = new RestRequest("/api/users/" + id, Method.PUT);
             request.RequestFormat = DataFormat.Json;
             request.AddBody(userDetails);
@@ -79,7 +107,7 @@ namespace RestSharpAPI
 
         public User UpdateUserPatchRequest(User userDetails, int id)
         {
-            var client = new RestClient(baseUrl);
+            var client = new RestClient(getBaseURL());
             var request = new RestRequest("/api/users/" + id, Method.PATCH);
             request.RequestFormat = DataFormat.Json;
             request.AddBody(userDetails);
@@ -94,7 +122,7 @@ namespace RestSharpAPI
 
         public int DeleteUser(int id)
         {
-            var client = new RestClient(baseUrl);
+            var client = new RestClient(getBaseURL());
             var request = new RestRequest("/api/users/" + id, Method.DELETE);
             request.RequestFormat = DataFormat.Json;
 
@@ -106,7 +134,7 @@ namespace RestSharpAPI
 
         public RegistrationAndLogin RegisterUser(RegistrationAndLogin regUser)
         {
-            var client = new RestClient(baseUrl);
+            var client = new RestClient(getBaseURL());
             var request = new RestRequest("/api/register", Method.POST);
             request.RequestFormat = DataFormat.Json;
             request.AddBody(regUser);
@@ -121,7 +149,7 @@ namespace RestSharpAPI
 
         public RegistrationAndLogin LoginUser(RegistrationAndLogin regUser)
         {
-            var client = new RestClient(baseUrl);
+            var client = new RestClient(getBaseURL());
             var request = new RestRequest("/api/login", Method.POST);
             request.RequestFormat = DataFormat.Json;
             request.AddBody(regUser);

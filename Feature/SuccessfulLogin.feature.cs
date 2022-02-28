@@ -103,7 +103,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 6
- testRunner.Given("I would like to login email \"eve.holt@reqres.in\" and password \"cityslicka\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I would like to login using email and password", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 7
  testRunner.When("I POST request to login using email and password", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
