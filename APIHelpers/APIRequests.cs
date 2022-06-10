@@ -38,10 +38,10 @@ namespace RestSharpAPI
         public Pages GetListUsers(int page)
         {
             var client = new RestClient(getBaseURL());
-            var request = new RestRequest("/api/users?page=" + page, Method.GET);
+            var request = new RestRequest("/api/users?page=" + page, Method.Get);
             request.RequestFormat = DataFormat.Json;
 
-            IRestResponse response = client.Execute(request);
+            RestResponse response = client.Execute(request);
             var content = response.Content;
 
             var users = JsonConvert.DeserializeObject<Pages>(content);
@@ -52,10 +52,10 @@ namespace RestSharpAPI
         public Datas GetUser(int id)
         {
             var client = new RestClient(getBaseURL());
-            var request = new RestRequest("/api/users/" + id, Method.GET);
+            var request = new RestRequest("/api/users/" + id, Method.Get);
             request.RequestFormat = DataFormat.Json;
 
-            IRestResponse response = client.Execute(request);
+            RestResponse response = client.Execute(request);
             var content = response.Content;
 
             var user = JsonConvert.DeserializeObject<Datas>(content);
@@ -66,10 +66,10 @@ namespace RestSharpAPI
         public int UserNotFound(int id)
         {
             var client = new RestClient(getBaseURL());
-            var request = new RestRequest("/api/users/" + id, Method.GET);
+            var request = new RestRequest("/api/users/" + id, Method.Get);
             request.RequestFormat = DataFormat.Json;
 
-            IRestResponse response = client.Execute(request);
+            RestResponse response = client.Execute(request);
             var statusCode = (int)response.StatusCode;
 
             return statusCode;
@@ -78,11 +78,11 @@ namespace RestSharpAPI
         public User CreateUser(User userDetails)
         {
             var client = new RestClient(getBaseURL());
-            var request = new RestRequest("/api/users/", Method.POST);
+            var request = new RestRequest("/api/users/", Method.Post);
             request.RequestFormat = DataFormat.Json;
             request.AddBody(userDetails);
 
-            IRestResponse response = client.Execute(request);
+            RestResponse response = client.Execute(request);
             var content = response.Content;
 
             var user = JsonConvert.DeserializeObject<User>(content);
@@ -93,11 +93,11 @@ namespace RestSharpAPI
         public User UpdateUserPutRequest(User userDetails, int id)
         {
             var client = new RestClient(getBaseURL());
-            var request = new RestRequest("/api/users/" + id, Method.PUT);
+            var request = new RestRequest("/api/users/" + id, Method.Put);
             request.RequestFormat = DataFormat.Json;
             request.AddBody(userDetails);
 
-            IRestResponse response = client.Execute(request);
+            RestResponse response = client.Execute(request);
             var content = response.Content;
 
             var user = JsonConvert.DeserializeObject<User>(content);
@@ -108,11 +108,11 @@ namespace RestSharpAPI
         public User UpdateUserPatchRequest(User userDetails, int id)
         {
             var client = new RestClient(getBaseURL());
-            var request = new RestRequest("/api/users/" + id, Method.PATCH);
+            var request = new RestRequest("/api/users/" + id, Method.Patch);
             request.RequestFormat = DataFormat.Json;
             request.AddBody(userDetails);
 
-            IRestResponse response = client.Execute(request);
+            RestResponse response = client.Execute(request);
             var content = response.Content;
 
             var user = JsonConvert.DeserializeObject<User>(content);
@@ -123,10 +123,10 @@ namespace RestSharpAPI
         public int DeleteUser(int id)
         {
             var client = new RestClient(getBaseURL());
-            var request = new RestRequest("/api/users/" + id, Method.DELETE);
+            var request = new RestRequest("/api/users/" + id, Method.Delete);
             request.RequestFormat = DataFormat.Json;
 
-            IRestResponse response = client.Execute(request);
+            RestResponse response = client.Execute(request);
             var statusCode = (int)response.StatusCode;
 
             return statusCode;
@@ -135,11 +135,11 @@ namespace RestSharpAPI
         public RegistrationAndLogin RegisterUser(RegistrationAndLogin regUser)
         {
             var client = new RestClient(getBaseURL());
-            var request = new RestRequest("/api/register", Method.POST);
+            var request = new RestRequest("/api/register", Method.Post);
             request.RequestFormat = DataFormat.Json;
             request.AddBody(regUser);
 
-            IRestResponse response = client.Execute(request);
+            RestResponse response = client.Execute(request);
             var content = response.Content;
 
             var registration = JsonConvert.DeserializeObject<RegistrationAndLogin>(content);
@@ -147,14 +147,14 @@ namespace RestSharpAPI
             return registration;
         }
 
-        public RegistrationAndLogin LoginUser(RegistrationAndLogin regUser)
+        public RegistrationAndLogin LoginUser(RegistrationAndLogin loginUser)
         {
             var client = new RestClient(getBaseURL());
-            var request = new RestRequest("/api/login", Method.POST);
+            var request = new RestRequest("/api/login", Method.Post);
             request.RequestFormat = DataFormat.Json;
-            request.AddBody(regUser);
+            request.AddBody(loginUser);
 
-            IRestResponse response = client.Execute(request);
+            RestResponse response = client.Execute(request);
             var content = response.Content;
 
             var login = JsonConvert.DeserializeObject<RegistrationAndLogin>(content);

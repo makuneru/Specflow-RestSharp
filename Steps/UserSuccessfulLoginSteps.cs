@@ -1,35 +1,28 @@
 using TechTalk.SpecFlow;
 using NUnit.Framework;
 using RestSharpAPI;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Specflow_RestSharp
 {
     [Binding]
-    public class UserSuccessfulLoginStepDefinitions
+    public class UserSuccessfulLoginSteps
     {
         RegistrationAndLogin login = new RegistrationAndLogin();
         RegistrationAndLogin loggedInUser;
         APIRequests user = new APIRequests();
-        private IConfiguration _config;
 
-        public UserSuccessfulLoginStepDefinitions(IConfiguration config)
-        {
-            _config = config;
-        }
 
         [Given(@"I would like to login using email and password")]
         public void GivenIWouldLikeToLoginUsingEmailAndPassword()
         {
-            login.email = _config["secret_email"];
-            login.email = _config["secret_password"];
+            login.email = "eve.holt@reqres.in";
+            login.password = "cityslicka";
         }
 
         [When(@"I POST request to login using email and password")]
         public void WhenIPOSTRequestToLoginUsingEmailAndPassword()
         {
-            loggedInUser = user.RegisterUser(login);
+            loggedInUser = user.LoginUser(login);
         }
 
         [Then(@"Validate that user is successfully logged in")]

@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Specflow_RestSharp
 {
     [Binding]
-    public class UserUnsuccessfulLoginStepDefinitions
+    public class UserUnsuccessfulLoginSteps
     {
         RegistrationAndLogin login = new RegistrationAndLogin();
         RegistrationAndLogin loggedInUser = new RegistrationAndLogin();
